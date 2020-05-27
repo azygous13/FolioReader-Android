@@ -4,9 +4,11 @@ import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
+
 import org.json.JSONObject;
 
 /**
@@ -24,6 +26,8 @@ public class Config implements Parcelable {
     public static final String CONFIG_THEME_COLOR_INT = "theme_color_int";
     public static final String CONFIG_IS_TTS = "is_tts";
     public static final String CONFIG_ALLOWED_DIRECTION = "allowed_direction";
+    public static final String CONFIG_ALLOWED_FONT_SELECTION = "allowed_font_selection";
+    public static final String CONFIG_ALLOWED_NIGHT_MODE = "allowed_night_mode";
     public static final String CONFIG_DIRECTION = "direction";
     private static final AllowedDirection DEFAULT_ALLOWED_DIRECTION = AllowedDirection.ONLY_VERTICAL;
     private static final Direction DEFAULT_DIRECTION = Direction.VERTICAL;
@@ -38,6 +42,8 @@ public class Config implements Parcelable {
     private boolean showTts = true;
     private AllowedDirection allowedDirection = DEFAULT_ALLOWED_DIRECTION;
     private Direction direction = DEFAULT_DIRECTION;
+    private boolean allowedFontSelection = true;
+    private boolean allowedNightMode = true;
 
     /**
      * Reading modes available
@@ -79,6 +85,8 @@ public class Config implements Parcelable {
         dest.writeByte((byte) (showTts ? 1 : 0));
         dest.writeString(allowedDirection.toString());
         dest.writeString(direction.toString());
+        dest.writeByte((byte) (allowedFontSelection ? 1 : 0));
+        dest.writeByte((byte) (allowedNightMode ? 1 : 0));
     }
 
     protected Config(Parcel in) {
@@ -89,6 +97,8 @@ public class Config implements Parcelable {
         showTts = in.readByte() != 0;
         allowedDirection = getAllowedDirectionFromString(LOG_TAG, in.readString());
         direction = getDirectionFromString(LOG_TAG, in.readString());
+        allowedFontSelection = in.readByte() != 0;
+        allowedNightMode = in.readByte() != 0;
     }
 
     public Config() {
@@ -103,6 +113,8 @@ public class Config implements Parcelable {
         allowedDirection = getAllowedDirectionFromString(LOG_TAG,
                 jsonObject.optString(CONFIG_ALLOWED_DIRECTION));
         direction = getDirectionFromString(LOG_TAG, jsonObject.optString(CONFIG_DIRECTION));
+        allowedFontSelection = jsonObject.optBoolean(CONFIG_ALLOWED_FONT_SELECTION);
+        allowedNightMode = jsonObject.optBoolean(CONFIG_ALLOWED_NIGHT_MODE);
     }
 
     public static Direction getDirectionFromString(final String LOG_TAG, String directionString) {
@@ -242,6 +254,24 @@ public class Config implements Parcelable {
         }
 
         return this;
+    }
+
+    public Config setAllowedFontSelection(boolean isAllow) {
+        allowedFontSelection = isAllow;
+        return this;
+    }
+
+    public boolean getAllowedFontSelection() {
+        return allowedFontSelection;
+    }
+
+    public Config setAllowedNightMode(boolean isAllow) {
+        allowedNightMode = isAllow;
+        return this;
+    }
+
+    public boolean getAllowedNightMode() {
+        return allowedNightMode;
     }
 
     public Direction getDirection() {

@@ -104,26 +104,31 @@ class ConfigBottomSheetDialogFragment : BottomSheetDialogFragment() {
             buttonHorizontal.visibility = View.GONE
         }
 
-        view_config_ib_day_mode.setOnClickListener {
-            isNightMode = true
-            toggleBlackTheme()
-            view_config_ib_day_mode.isSelected = true
-            view_config_ib_night_mode.isSelected = false
-            setToolBarColor()
-            setAudioPlayerBackground()
-            UiUtil.setColorResToDrawable(R.color.app_gray, view_config_ib_night_mode.drawable)
-            UiUtil.setColorIntToDrawable(config.themeColor, view_config_ib_day_mode.drawable)
-        }
+        if (config.allowedNightMode) {
+            view_config_ib_day_mode.setOnClickListener {
+                isNightMode = true
+                toggleBlackTheme()
+                view_config_ib_day_mode.isSelected = true
+                view_config_ib_night_mode.isSelected = false
+                setToolBarColor()
+                setAudioPlayerBackground()
+                UiUtil.setColorResToDrawable(R.color.app_gray, view_config_ib_night_mode.drawable)
+                UiUtil.setColorIntToDrawable(config.themeColor, view_config_ib_day_mode.drawable)
+            }
 
-        view_config_ib_night_mode.setOnClickListener {
-            isNightMode = false
-            toggleBlackTheme()
-            view_config_ib_day_mode.isSelected = false
-            view_config_ib_night_mode.isSelected = true
-            UiUtil.setColorResToDrawable(R.color.app_gray, view_config_ib_day_mode.drawable)
-            UiUtil.setColorIntToDrawable(config.themeColor, view_config_ib_night_mode.drawable)
-            setToolBarColor()
-            setAudioPlayerBackground()
+            view_config_ib_night_mode.setOnClickListener {
+                isNightMode = false
+                toggleBlackTheme()
+                view_config_ib_day_mode.isSelected = false
+                view_config_ib_night_mode.isSelected = true
+                UiUtil.setColorResToDrawable(R.color.app_gray, view_config_ib_day_mode.drawable)
+                UiUtil.setColorIntToDrawable(config.themeColor, view_config_ib_night_mode.drawable)
+                setToolBarColor()
+                setAudioPlayerBackground()
+            }
+        } else {
+            view_config_ib_day_mode.visibility = View.GONE
+            view_config_ib_night_mode.visibility = View.GONE
         }
 
         if (activityCallback.direction == Config.Direction.HORIZONTAL) {
@@ -152,22 +157,28 @@ class ConfigBottomSheetDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun configFonts() {
+        if (config.allowedFontSelection) {
+            val colorStateList = UiUtil.getColorList(
+                config.themeColor,
+                ContextCompat.getColor(context!!, R.color.grey_color)
+            )
+            buttonVertical.setTextColor(colorStateList)
+            buttonHorizontal.setTextColor(colorStateList)
+            view_config_font_andada.setTextColor(colorStateList)
+            view_config_font_lato.setTextColor(colorStateList)
+            view_config_font_lora.setTextColor(colorStateList)
+            view_config_font_raleway.setTextColor(colorStateList)
 
-        val colorStateList = UiUtil.getColorList(
-            config.themeColor,
-            ContextCompat.getColor(context!!, R.color.grey_color)
-        )
-        buttonVertical.setTextColor(colorStateList)
-        buttonHorizontal.setTextColor(colorStateList)
-        view_config_font_andada.setTextColor(colorStateList)
-        view_config_font_lato.setTextColor(colorStateList)
-        view_config_font_lora.setTextColor(colorStateList)
-        view_config_font_raleway.setTextColor(colorStateList)
-
-        view_config_font_andada.setOnClickListener { selectFont(Constants.FONT_ANDADA, true) }
-        view_config_font_lato.setOnClickListener { selectFont(Constants.FONT_LATO, true) }
-        view_config_font_lora.setOnClickListener { selectFont(Constants.FONT_LORA, true) }
-        view_config_font_raleway.setOnClickListener { selectFont(Constants.FONT_RALEWAY, true) }
+            view_config_font_andada.setOnClickListener { selectFont(Constants.FONT_ANDADA, true) }
+            view_config_font_lato.setOnClickListener { selectFont(Constants.FONT_LATO, true) }
+            view_config_font_lora.setOnClickListener { selectFont(Constants.FONT_LORA, true) }
+            view_config_font_raleway.setOnClickListener { selectFont(Constants.FONT_RALEWAY, true) }
+        } else {
+            view_config_font_andada.visibility = View.GONE
+            view_config_font_lato.visibility = View.GONE
+            view_config_font_lora.visibility = View.GONE
+            view_config_font_raleway.visibility = View.GONE
+        }
     }
 
     private fun selectFont(selectedFont: Int, isReloadNeeded: Boolean) {
