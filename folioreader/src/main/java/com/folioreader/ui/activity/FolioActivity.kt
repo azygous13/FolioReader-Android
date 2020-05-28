@@ -258,6 +258,7 @@ class FolioActivity : AppCompatActivity(), FolioActivityCallback, MediaControlle
         // Fix for screen get turned off while reading
         // TODO -> Make this configurable
         // getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
 
         setConfig(savedInstanceState)
         initDistractionFreeMode(savedInstanceState)
