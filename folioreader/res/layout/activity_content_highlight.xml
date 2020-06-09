@@ -44,8 +44,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="@string/contents"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
             <View
                 android:id="@+id/view"
