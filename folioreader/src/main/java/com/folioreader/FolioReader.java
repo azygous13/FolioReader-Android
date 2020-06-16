@@ -211,6 +211,7 @@ public class FolioReader {
             return;
 
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
+                .retryOnConnectionFailure(true)
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
                 .writeTimeout(1, TimeUnit.MINUTES);
