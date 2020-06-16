@@ -220,6 +220,7 @@ public class FolioReader {
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request().newBuilder()
                         .addHeader("Connection", "close")
+                        .addHeader("Transfer-Encoding", "chunked")
                         .build();
                 return chain.proceed(request);
             }
