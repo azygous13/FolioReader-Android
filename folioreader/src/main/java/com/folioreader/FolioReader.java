@@ -19,11 +19,16 @@ import com.folioreader.ui.base.OnSaveHighlight;
 import com.folioreader.ui.base.SaveReceivedHighlightTask;
 import com.folioreader.util.OnHighlightListener;
 import com.folioreader.util.ReadLocatorListener;
+
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -205,11 +210,22 @@ public class FolioReader {
         if (singleton == null || singleton.retrofit != null)
             return;
 
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
-                .writeTimeout(1, TimeUnit.MINUTES)
-                .build();
+                .writeTimeout(1, TimeUnit.MINUTES);
+
+        okHttpClient.interceptors().add(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request().newBuilder()
+                        .addHeader("Connection", "close")
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = okHttpClient.build();
 
         singleton.retrofit = new Retrofit.Builder()
                 .baseUrl(streamerUrl)

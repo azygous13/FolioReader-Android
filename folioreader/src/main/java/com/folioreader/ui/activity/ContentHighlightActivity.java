@@ -51,6 +51,7 @@ public class ContentHighlightActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.btn_contents)).setTextColor(UiUtil.getColorList(ContextCompat.getColor(this, R.color.black), mConfig.getThemeColor()));
 
         } else {
+            findViewById(R.id.toolbar).setBackgroundColor(Color.BLACK);
             ((TextView) findViewById(R.id.btn_contents)).setTextColor(mConfig.getThemeColor());
 //            ((TextView) findViewById(R.id.btn_contents)).setTextColor(UiUtil.getColorList(ContextCompat.getColor(this, R.color.white), mConfig.getThemeColor()));
 //            findViewById(R.id.btn_contents).setBackgroundDrawable(UiUtil.createStateDrawable(mConfig.getThemeColor(), ContextCompat.getColor(this, R.color.white)));
