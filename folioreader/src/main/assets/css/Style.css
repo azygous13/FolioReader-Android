@@ -249,6 +249,11 @@ html.nightMode .highlight_underline {border-bottom: 2px solid rgba(240, 40, 20, 
     src: url('file:///android_asset/fonts/raleway/Raleway-Regular.ttf');
 }
 
+@font-face {
+    font-family: 'sarabun';
+    src: url('file:///android_asset/fonts/sarabun/Sarabun-Regular.ttf');
+}
+
 .andada {
      font-family: "andada", sans-serif;
  }
@@ -260,6 +265,9 @@ html.nightMode .highlight_underline {border-bottom: 2px solid rgba(240, 40, 20, 
  }
 .raleway {
      font-family: "raleway", sans-serif;
+ }
+ .sarabun {
+     font-family: "sarabun", sans-serif;
  }
 
 html.textSizeOne { font-size: 13px !important; }

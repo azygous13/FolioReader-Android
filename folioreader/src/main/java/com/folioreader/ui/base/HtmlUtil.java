@@ -72,6 +72,8 @@ public final class HtmlUtil {
                 break;
             case Constants.FONT_RALEWAY:
                 classes = "raleway";
+            case Constants.FONT_SARABUN:
+                classes = "sarabun";
                 break;
             default:
                 break;

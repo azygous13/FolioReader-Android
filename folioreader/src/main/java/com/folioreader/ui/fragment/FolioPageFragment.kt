@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.folioreader.Config
+import com.folioreader.Constants
 import com.folioreader.FolioReader
 import com.folioreader.R
 import com.folioreader.mediaoverlay.MediaController
@@ -301,6 +302,7 @@ class FolioPageFragment : Fragment(),
                 mediaController.setUpMediaPlayer(spineItem.mediaOverlay, spineItem.mediaOverlay.getAudioPath(spineItem.href), mBookTitle);
             }*/
             mConfig = AppUtil.getSavedConfig(context)
+            mConfig?.font = Constants.FONT_SARABUN
 
             val href = spineItem.href
             var path = ""
